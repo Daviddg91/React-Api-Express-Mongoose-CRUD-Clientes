@@ -59,7 +59,7 @@ router.put(
         check('correo','El correo es obligatorio').not().isEmpty(),
         check('correo','El correo no es correcto').isEmail(),
         check('telefono','El telefono es obligatorio').not().isEmpty(),
-        check('telefono','El telefono es no es correcto').not().isLength({ min: 99999, max:999999999 }),99999999 }),
+        check('telefono','El telefono es no es correcto').not().isLength({ min: 99999, max:999999999 }),
         validarCampos
     ],
     actualizarCliente 
