@@ -31,14 +31,18 @@ const ClienteSchema = Schema({
         required: true  
     },
 
-
+    correo:{
+        type: String,      
+        required: true  
+        
+    },
     id: {
         type: Schema.Types.ObjectId,
     }
 
 });
 
-EventoSchema.method('toJSON', function() {
+ClienteSchema.method('toJSON', function() {
     const { __v, _id, ...object } = this.toObject();
     object.id = _id;
     return object;
@@ -46,5 +50,5 @@ EventoSchema.method('toJSON', function() {
 
 
 
-module.exports = model('Cliente', EventoSchema );
+module.exports = model('Cliente', ClienteSchema );
 

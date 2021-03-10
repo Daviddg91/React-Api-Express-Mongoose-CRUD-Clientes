@@ -1,11 +1,10 @@
 const { response } = require('express');
 const Cliente = require('../models/Cliente');
 
-const getEventos = async( req, res = response ) => {
-
-    const clientes = await Cliente.find()
+const getClientes = async( req, res = response ) => {
+console.log("hola");
+    const clientes = await Cliente.find();
                                 //.populate('user','name');
-
     res.json({
         ok: true,
         clientes
@@ -24,12 +23,11 @@ const crearCliente = async ( req, res = response ) => {
 
         res.json({
             ok: true,
-            evento: clienteGuardado
+            cliente: clienteGuardado
         })
 
-
     } catch (error) {
-        console.log(error)
+        console.log(error);
         res.status(500).json({
             ok: false,
             msg: 'Hable con el administrador'
@@ -124,7 +122,7 @@ const eliminarCliente = async( req, res = response ) => {
 
 
 module.exports = {
-    getEventos,
+    getClientes,
     crearCliente,
     actualizarCliente,
     eliminarCliente

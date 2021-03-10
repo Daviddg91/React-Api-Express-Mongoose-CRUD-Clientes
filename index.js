@@ -2,7 +2,7 @@ const express = require('express');
 require('dotenv').config();
 const cors = require('cors');
 const { dbConnection } = require('./database/config');
-
+var bodyParser = require('body-parser')
 // Crear el servidor de express
 const app = express();
 
@@ -19,8 +19,11 @@ app.use( express.static('public') );
 app.use( express.json() );
 
 // Rutas
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use('/api/auth', require('./routes/auth') );
-app.use('/api/events', require('./routes/events') );
+app.use('/api/clients', require('./routes/clients') );
 
 
 
