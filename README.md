@@ -8,4 +8,4 @@ SECRET_JWT_SEED=Secret-word
 TIEMPO_EXPIRE_TOKEN=12h
 
 deploy command to install packages:
-npm i bcryptjs cors dotenv  express express-validator jsonwebtoken  moment mongoose
+npm i bcryptjs cors dotenv  express express-validator jsonwebtoken   mongoose (moment )
