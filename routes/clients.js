@@ -8,7 +8,7 @@ const { check } = require('express-validator');
 //const { isDate } = require('../helpers/isDate');
 const { validarCampos } = require('../middlewares/validar-campos');
 const { validarJWT } = require('../middlewares/validar-jwt');
-const { getClientes, crearCliente, actualizarCliente, eliminarCliente } = require('../controllers/clientes');
+const { getClientes, crearCliente, actualizarCliente, eliminarCliente, FindClientByDNI } = require('../controllers/clientes');
 const { isDni } = require ('../helpers/isDni');
 const router = Router();
 
@@ -48,9 +48,9 @@ router.put(
     '/:id', 
     [
         check('nombre','El nombre es obligatorio').not().isEmpty(),
-        check('apellidos','El apellido es obligatorio').not().isEmpty(),
-        check('direccion','La direccion es obligatorio').not().isEmpty(),
-        check('edad','La edad es obligatorio').not().isEmpty(),
+        check('apellidos','Los apellido son obligatorios').not().isEmpty(),
+        check('direccion','La direccion es obligatoria').not().isEmpty(),
+        check('edad','La edad es obligatoria').not().isEmpty(),
         check('edad','La edad tiene que ser mayor de 18 y menor de 100 ').not().isLength({ min: 18, max:100 }),
         check('cp','El cp es obligatorio').not().isEmpty(),
         check('cp','El Código postal es no es correcto').not().isLength({ min: 1000, max:999999 }),
@@ -66,6 +66,6 @@ router.put(
 );
 
 // Borrar cliente
-router.delete('/:id', eliminarCliente );
-
+router.delete('/:dni', eliminarCliente );
+router.get('/getClient/:dni' , FindClientByDNI );
 module.exports = router;

@@ -2,7 +2,7 @@ const { response } = require('express');
 const Cliente = require('../models/Cliente');
 
 const getClientes = async( req, res = response ) => {
-console.log("hola");
+
     const clientes = await Cliente.find();
                                 //.populate('user','name');
     res.json({
@@ -82,32 +82,24 @@ const actualizarCliente = async( req, res = response ) => {
 }
 
 const eliminarCliente = async( req, res = response ) => {
-
-   /* const clienteId = req.params.id;
-    const uid = req.uid;*/
-
+     
+    const dni = req.params.dni;
+   
     try {
 
-        const cliente = await Cliente.findById( eventoId );
-
-        if ( !cliente ) {
+        const cliente = await Cliente.find({dni : dni});
+        const clienteObject = (cliente[0]);
+        
+        if ( !clienteObject ) {
             return res.status(404).json({
                 ok: false,
-                msg: 'Cliente no existe por ese id'
+                msg: 'No existe ningun cliente por ese dni'
             });
         }
+        
+         await Cliente.findByIdAndDelete(  clienteObject._id );
 
-    /*   if ( cliente.user.toString() !== uid ) {
-            return res.status(401).json({
-                ok: false,
-                msg: 'No tiene privilegio de eliminar este evento'
-            });
-        }*/
-
-
-        await Cliente.findByIdAndDelete( eventoId );
-
-        res.json({ ok: true });
+         res.json( { ok: true }).status(200);
 
         
     } catch (error) {
@@ -119,11 +111,40 @@ const eliminarCliente = async( req, res = response ) => {
     }
 
 }
+const FindClientByDNI = async( req, res = response ) => {
 
+     const dni = req.params.dni;
 
+     try {
+ 
+            
+      const cliente =  await Cliente.find({ dni: dni });
+
+         if ( !cliente ) {
+             return res.status(404).json({
+                 ok: false,
+                 msg: 'Cliente no existe por ese DNI'
+             });
+         }
+         
+         res.json({ ok: true, cliente });
+ 
+         
+     } catch (error) {
+         console.log(error);
+         res.status(500).json({
+             ok: false,
+             msg: 'Hable con el administrador'
+         });
+     }
+ 
+ }
+
+ 
 module.exports = {
     getClientes,
     crearCliente,
     actualizarCliente,
-    eliminarCliente
+    eliminarCliente,
+    FindClientByDNI
 }
